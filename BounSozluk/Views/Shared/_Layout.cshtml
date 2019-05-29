@@ -1,0 +1,88 @@
+﻿<!DOCTYPE HTML>
+<html>
+<head>
+    <title>@ViewData["Title"] - BounSozluk</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <link rel="stylesheet" href="~/css/theme/main.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+</head>
+<body class="is-preload">
+
+    <!-- Wrapper -->
+    <div id="wrapper">
+
+        <!-- Header -->
+        <header id="header">
+            <h1><a asp-area="" asp-controller="Home" asp-action="Index">BounSozluk</a></h1>
+            <nav class="links">
+                <ul>
+                    <li><a asp-area="" asp-controller="PostGroups" asp-action="PostList" asp-route-id="Events">Events</a></li>
+                    <li><a asp-area="" asp-controller="PostGroups" asp-action="PostList" asp-route-id="Career">Career</a></li>
+                    <li><a asp-area="" asp-controller="PostGroups" asp-action="PostList" asp-route-id="Housing">Housing</a></li>
+                    <li><a asp-area="" asp-controller="PostGroups" asp-action="PostList" asp-route-id="Lost & Found">Lost & Found</a></li>
+                    <li><a asp-area="" asp-controller="PostGroups" asp-action="PostList" asp-route-id="Academic">Academic</a></li>
+                </ul>
+            </nav>
+            <nav class="main">
+                <ul>
+                    @*<li class="search">
+                            <a class="fa-search" href="#search">Search</a>
+                            <form id="search" method="get" action="#">
+                                <input type="text" name="query" placeholder="Search" />
+                            </form>
+                        </li>*@
+                    <li class="menu">
+                        <a class="fa-user" href="#menu">Menu</a>
+                    </li>
+                </ul>
+            </nav>
+        </header>
+
+        <!-- Menu -->
+        <section id="menu">
+
+            <!-- Search -->
+            @*<section>
+                    <form class="search" method="get" action="#">
+                        <input type="text" name="query" placeholder="Search" />
+                    </form>
+                </section>*@
+
+            <!-- Links -->
+            @*<section>
+                    <ul class="links">
+                        <li>
+                            <a href="#">
+                                <h3>Etiam sed consequat</h3>
+                                <p>Porta lectus amet ultricies</p>
+                            </a>
+                        </li>
+                    </ul>
+                </section>*@
+
+            <!-- Actions -->
+            <section>
+                @*<ul class="actions stacked">
+                        <li><a href="#" class="button large fit">Log In</a></li>
+                    </ul>*@
+                <partial name="_LoginPartial" />
+            </section>
+
+        </section>
+
+        <!-- Main -->
+        @RenderBody()
+    </div>
+
+    <!-- Scripts -->
+    <script src="~/js/theme/jquery.min.js" src="~/js/theme/jquery.min.js"></script>
+    <script src="~/js/theme/browser.min.js"></script>
+    <script src="~/js/theme/breakpoints.min.js"></script>
+    <script src="~/js/theme/util.js"></script>
+    <script src="~/js/theme/main.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

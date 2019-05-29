@@ -1,0 +1,134 @@
+﻿@using Microsoft.AspNetCore.Identity
+@model BounSozluk.Models.Post
+@inject UserManager<BounSozlukUser> UserManager
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<div id="main">
+    <!-- Post -->
+    <article class="post">
+        <header>
+            <div class="title">
+                <h2>@Model.Title</h2>
+                @if (ViewBag.CurrentUserId == Model.BounSozlukUserId || ViewBag.IsAdmin)
+                {
+                    <div style="text-align:right;"><a asp-action="DeletePost" asp-controller="Posts" asp-route-id="@Model.Id">Delete Post</a></div>
+                }
+            </div>
+            <div class="meta">
+                <time class="published" datetime="@Model.CreateDate">@Model.CreateDate</time>
+                <a href="#" class="author"><span class="name">@Model.BounSozlukUser.Name @Model.BounSozlukUser.Surname</span><img style="width:50px;height:50px;border-radius:50%;" src="~/uploads/@Model.BounSozlukUser.PhotoUrl" alt="" /></a>
+            </div>
+        </header>
+        <span class="image featured"><img style="width:350px!important;height:auto;margin:0 auto;" src="~/uploads/@Model.PhotoUrl" alt="" /></span>
+        <h6>Comments</h6>
+        <hr />
+        @if (Model.Comments != null && Model.Comments.Count() > 0)
+        {
+            foreach (var comment in Model.Comments)
+            {
+                <p>
+                    @comment.Content
+                </p>
+                <p style="text-align: right;margin-bottom:0;">
+                    @comment.BounSozlukUser.Name @comment.BounSozlukUser.Surname <img style="width:40px;height:40px;border-radius:50%;margin-left:10px;vertical-align:middle;" src="~/uploads/@comment.BounSozlukUser.PhotoUrl" />
+                </p>
+                <p style="text-align: right;height:20px;">
+                    @comment.CreateDate
+                </p>
+                @if (ViewBag.CurrentUserId == comment.BounSozlukUserId || ViewBag.IsAdmin)
+                {
+                    <p style="text-align: right;height:20px;">
+                        <a asp-action="DeleteComment" asp-controller="Comments" asp-route-id="@comment.Id">Delete Comment</a>
+                    </p>
+                }
+                <p style="text-align: center;">
+                    @if (comment.Likes != null && comment.Likes.Count() > 0)
+                    {
+                        if (comment.Likes.Count() > 1)
+                        {
+                            <a href="/Comments/LikeComment/@comment.Id">
+                                <i class="fa fa-heart"></i> @comment.Likes.Count() Likes
+                            </a>
+                        }
+                        else
+                        {
+                            <a href="/Comments/LikeComment/@comment.Id">
+                                <i class="fa fa-heart"></i> @comment.Likes.Count() Like
+                            </a>
+                        }
+                    }
+                    else
+                    {
+                        <a href="/Comments/LikeComment/@comment.Id">
+                            <i class="fa fa-heart"></i> 0 Like
+                        </a>
+                    }
+
+                </p>
+                <hr />
+            }
+        }
+        else
+        {
+            <p>
+                There is no comment.
+            </p>
+        }
+        <p>
+            <a asp-area="" asp-controller="Comments" asp-action="Create" asp-route-id="@Model.Id" class="button">Add Comment</a>
+        </p>
+        <footer>
+            <ul class="stats">
+                <li><a asp-area="" asp-controller="PostGroups" asp-action="PostList" asp-route-id="@Model.PostGroup.Name">@Model.PostGroup.Name</a></li>
+                @*<li><a href="#" class="icon fa-heart">28</a></li>*@
+                @if (Model.Comments != null && Model.Comments.Count() > 0)
+                {
+                    <li style="font-size: 13px;">
+                        <a href="#" class="icon fa-comment"> @Model.Comments.Count() </a>
+                    </li>
+                }
+                else
+                {
+                    <li style="font-size: 13px;">
+                        <a href="#" class="icon fa-comment"> 0 </a>
+                    </li>
+                }
+            </ul>
+        </footer>
+    </article>
+
+</div>
+
+@*<h1>Details</h1>
+
+    <div>
+        <h4>Post</h4>
+        <hr />
+        <dl class="row">
+            <dt class = "col-sm-2">
+                @Html.DisplayNameFor(model => model.Title)
+            </dt>
+            <dd class = "col-sm-10">
+                @Html.DisplayFor(model => model.Title)
+            </dd>
+            <dt class = "col-sm-2">
+                @Html.DisplayNameFor(model => model.PostGroup)
+            </dt>
+            <dd class = "col-sm-10">
+                @Html.DisplayFor(model => model.PostGroup.Id)
+            </dd>
+            <dt class = "col-sm-2">
+                @Html.DisplayNameFor(model => model.BounSozlukUserId)
+            </dt>
+            <dd class = "col-sm-10">
+                @Html.DisplayFor(model => model.BounSozlukUserId)
+            </dd>
+        </dl>
+    </div>
+    <div>
+        <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
+        <a asp-action="Index">Back to List</a>
+    </div>*@

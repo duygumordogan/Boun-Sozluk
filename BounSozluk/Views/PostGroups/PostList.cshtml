@@ -1,0 +1,52 @@
+﻿@model PostListViewModel
+
+@{
+    ViewData["Title"] = ViewBag.PostGroupName;
+}
+
+<h1>@ViewBag.PostGroupName</h1>
+
+<div id="main">
+    <a asp-area="" asp-controller="Posts" asp-action="Create" class="button" style="margin-bottom: 10px;">Create New Post</a>
+    <br />
+    @foreach (var post in Model.Posts)
+    {
+        <article class="post">
+            <header>
+                <div class="title">
+                    <h2><a asp-action="Details" asp-controller="Posts" asp-route-id="@post.Id">@post.Title</a></h2>
+                </div>
+                <div class="meta">
+                    <time class="published" datetime="@post.CreateDate">@post.CreateDate</time>
+                    <a href="#" class="author"><span class="name">@post.BounSozlukUser.Name @post.BounSozlukUser.Surname </span><img src="~/uploads/@post.BounSozlukUser.PhotoUrl" alt="" /></a>
+                </div>
+            </header>
+            <span class="image featured"><img style="width:350px!important;height:auto;margin:0 auto;" src="~/uploads/@post.PhotoUrl" alt="" /></span>
+            @if (post.Comments != null && post.Comments.Count() > 0)
+            {
+                <p> @post.Comments.First().Content </p>
+            }
+                <p>
+                    <a asp-area="" asp-controller="Comments" asp-action="Create" asp-route-id="@post.Id" class="button">Add Comment</a>
+                </p>
+            <footer>
+                <ul class="stats">
+                    <li><a asp-area="" asp-controller="PostGroups" asp-action="PostList" asp-route-id="@ViewBag.PostGroupName">@ViewBag.PostGroupName</a></li>
+                    @*<li><a href="#" class="icon fa-heart">28</a></li>*@
+                    @if (post.Comments != null && post.Comments.Count() > 0)
+                    {
+                        <li>
+                            <a href="#" class="icon fa-comment"> @post.Comments.Count() </a>
+                        </li>
+                    }
+                    else
+                    {
+                        <li>
+                            <a href="#" class="icon fa-comment"> 0 </a>
+                        </li>
+                    }
+                </ul>
+            </footer>
+        </article>
+    }
+</div>

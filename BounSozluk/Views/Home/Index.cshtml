@@ -1,0 +1,68 @@
+﻿@model BounSozluk.Models.HomeViewModel
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div id="main">
+    @if (Model != null && Model.RandomPost != null && !String.IsNullOrEmpty(Model.RandomPost.Title))
+    {
+        <!-- Post -->
+    <article class="post">
+        <header>
+            <div class="title">
+                <h2><a asp-area="" asp-controller="Posts" asp-action="Details" asp-route-id="@Model.RandomPost.Id"> @Model.RandomPost.Title </a></h2>
+            </div>
+            <div class="meta">
+                <time class="published" datetime="@Model.RandomPost.CreateDate">@Model.RandomPost.CreateDate</time>
+                <a href="#" class="author"><img style="width:40px;height:40px;" src="~/uploads/@Model.RandomPost.PhotoUrl" alt="" /></a>
+            </div>
+        </header>
+        <a asp-area="" asp-controller="Posts" asp-action="Details" asp-route-id="@Model.RandomPost.Id" class="image featured"><img src="images/pic03.jpg" alt="" /></a>
+        @if (Model.RandomPost.Comments != null && Model.RandomPost.Comments.Count() > 0)
+        {
+            <p>
+                @Model.RandomPost.Comments.FirstOrDefault().Content
+            </p>
+        }
+        <footer>
+            <ul class="actions">
+                <li><a asp-area="" asp-controller="Posts" asp-action="Details" asp-route-id="@Model.RandomPost.Id" class="button large">Continue Reading</a></li>
+            </ul>
+            @*<ul class="stats">
+                <li><a href="#">General</a></li>
+                <li><a href="#" class="icon fa-heart">28</a></li>
+                <li><a href="#" class="icon fa-comment">128</a></li>
+            </ul>*@
+        </footer>
+    </article>
+    }
+
+</div>
+
+<section id="sidebar">
+    <section id="intro">
+        <a asp-area="" asp-controller="Home" asp-action="Index" class="logo"><img src="images/logo.jpg" alt="" /></a>
+        <header>
+            <h2>Boun &nbsp; &nbsp; &nbsp; Sozluk</h2>
+            <p> Meeting Point for Boun Students </p>
+        </header>
+    </section>
+
+    <section>
+        <div class="mini-posts">
+            @if (Model != null && Model.LastPosts.Count() > 0)
+            {
+                @foreach (var post in Model.LastPosts)
+                {
+                    <article class="mini-post">
+                        <header>
+                            <h3><a asp-controller="Posts" asp-action="Details" asp-route-id="@post.Id"> @post.Title </a></h3>
+                        </header>
+                        <a asp-controller="Posts" asp-action="Details" asp-route-id="@post.Id" class="image"><img src="~/uploads/@post.PhotoUrl" alt="" /></a>
+                    </article>
+                }
+            }
+        </div>
+    </section>
+</section>
